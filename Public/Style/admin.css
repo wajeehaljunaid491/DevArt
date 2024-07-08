@@ -1,0 +1,516 @@
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+  @font-face {
+    font-family: font-light;
+    src: url("../Assets/fonts/MatterTRIAL-Light.otf");
+  }
+  
+  @font-face {
+    font-family: font-regular;
+    src: url("../Assets/fonts/MatterTRIAL-Regular.otf");
+  }
+  
+  @font-face {
+    font-family: font-medium;
+    src: url("../Assets/fonts/MatterTRIAL-Medium.otf");
+  }
+  @font-face {
+    font-family: font-semibold;
+    src: url("../Assets/fonts/MatterTRIAL-SemiBold.otf");
+  }
+  @font-face {
+    font-family: font-gallery;
+    src: url("../Assets/fonts/GalleryModern.otf");
+  }
+  
+  ::selection {
+    background-color: black;
+    color: white;
+  }
+  
+  :root {
+    --background-primary-color: #000;
+    --background-secondary-color: #fff;
+    --background-third-color: #212124;
+    --text-primary: #ffffff;
+    --text-secondary: #818181;
+    --text-dark: #000;
+    --font-light: "font-light";
+    --font-regular: "font-regular";
+    --font-medium: "font-medium";
+    --font-semibold: "font-semibold";
+    --font-gallery: "font-gallery";
+    --light: 14px;
+    --regular: 16px;
+    --medium: 32px;
+    --xl: 42px;
+    --xxl: 68px;
+    --cross: 32px;
+    --opacity: 85%;
+  }
+  
+  body {
+    background-color: var(--background-primary-color);
+    font-family: "font-light";
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  #navbar {
+    width: 100%; /* Full width */
+    transition: top 0.3s; /* Transition effect when sliding down (and up) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    z-index: 2;
+  }
+  
+  nav .logo img {
+    width: 68px;
+    margin-left: 12px;
+  }
+  
+  .menu-container {
+    flex-grow: 1;
+  }
+  
+  .menu-inside {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-right: 28px;
+  }
+  
+  .profile {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    filter: grayscale(0);
+    transition: all 0.9s ease;
+  }
+  
+  .profile:hover {
+    filter: grayscale(100%);
+  }
+  
+  .profile img {
+    width: 100%;
+    border-radius: 50%;
+    height: 100%;
+    background-size: cover;
+  }
+  
+  .open-menu button {
+    background: none;
+    padding: 8px;
+    color: var(--text-primary);
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-regular);
+    opacity: var(--opacity);
+  }
+  
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: none; /* awalnya disembunyikan */
+  }
+  
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    right: 0;
+    background-color: var(--background-secondary-color);
+    overflow: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    font-size: var(--cross);
+    top: 16px;
+    right: 25px;
+    padding: 8px 16px;
+    color: var(--text-dark);
+    border-radius: 100%;
+    border: none;
+    background-color: transparent;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .sidenav .closebtn:hover {
+    background-color: var(--background-primary-color);
+    border-radius: 100%;
+    color: var(--text-primary);
+  }
+  
+  .menu-overlay {
+    display: flex;
+    margin-left: 42px;
+  }
+  
+  .artType h6 {
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: normal;
+  }
+  
+  .artType li {
+    list-style: none;
+    margin-top: 16px;
+  }
+  
+  .artType li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--text-dark);
+  }
+  
+  .nav-overlay {
+    margin-left: 80px;
+  }
+  
+  .nav-overlay h6 {
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: normal;
+  }
+  
+  .nav-overlay li {
+    list-style: none;
+    margin-top: 10px;
+  }
+  
+  .nav-overlay li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 52px;
+    position: relative;
+  }
+  
+  .nav-overlay li a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--text-dark);
+    transition: width 0.5s ease;
+  }
+  
+  .nav-overlay li a:hover::after {
+    width: 100%;
+  }
+  
+  .info {
+    margin-left: 82px;
+    margin-top: 60px;
+  }
+  
+  .info .text {
+    color: var(--text-secondary);
+    font-size: 16px;
+  }
+  
+  .info button {
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid #818181;
+    background-color: transparent;
+    padding: 8px 0;
+    transition: border-bottom-color 0.3s ease;
+    cursor: pointer;
+    font-family: "font-regular";
+    opacity: var(--opacity);
+  }
+  
+  .info button:hover {
+    border-bottom-color: #000;
+  }
+  
+  /*  */
+  
+  /* Style the tab */
+  .tab {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin: 120px 24px;
+  }
+  
+  .tab .title-page {
+    color: #fff;
+    font-size: 24px;
+    font-family: "font-regular";
+    width: 17%;
+  }
+  
+  .button-group {
+    border-bottom: 1px dashed #232323;
+    width: 80%;
+    display: flex;
+    gap: 2rem;
+    margin-left: 120px;
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 14px 0;
+    transition: 0.3s;
+    font-family: "font-regular";
+    color: #fff;
+    position: relative; /* Ensure the button is positioned relative to allow absolute positioning of the underline */
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    border-bottom: none; /* Remove the default border-bottom */
+  }
+  
+  .tab button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; /* Align it with the border of the button-group */
+    left: 0;
+    width: 100%;
+    height: 1px; /* Same height as the button-group's border */
+    background-color: #FFF; /* Same color as the button-group's border */
+  }
+  
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    margin: 0 24px;
+    border-top: none;
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+  }
+  
+  .tabcontent.default {
+    display: block;
+  }
+  
+  .header {
+    color: #fff;
+  }
+  
+  .header2 {
+    color: #fff;
+    margin-top: 5%;
+  }
+  
+  .title-tab {
+    font-family: "font-regular";
+    font-size: 24px;
+  }
+  
+  .sub-title {
+    margin-top: 18px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 2% 0;
+  }
+  
+  label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 42px;
+  }
+  
+  input {
+    border: none;
+    border-bottom: 1px solid #464646;
+    background-color: #232323;
+    outline: none;
+    width: 60%;
+    color: #fff;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .file-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input[type="file"] {
+    background: #232323;
+    border: 1px dotted #464646;
+    padding: 24px;
+    width: 20%;
+  }
+  
+  textarea {
+    background-color: #232323;
+    border: 1px solid #464646;
+    outline: none;
+    width: 60%;
+    color: #fff;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .row {
+    display: flex;
+    width: 60%;
+    gap: 5%;
+  }
+  
+  .item {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+  
+  input[type="url"] {
+    width: 95%;
+  }
+  
+  input[type="submit"] {
+    width: 20%;
+    border-radius: 8px;
+    padding: 24px 42px;
+    background-color: #fff;
+    font-size: 18px;
+    color: #000;
+    font-family: "font-regular";
+    border: none;
+    right: 10%;
+    position: absolute;
+    transition: all 0.3s ease;
+  }
+  input[type="submit"]:hover {
+    background-color: #cfcece;
+  }
+  
+  select {
+    border: none;
+    border-bottom: 1px solid #464646;
+    background-color: #232323;
+    outline: none;
+    width: 62%;
+    color: #fff;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .line {
+    margin: 60px 0;
+    width: 100%;
+    border-bottom: 1px dotted #232323;
+  }
+  
+  /* PERSONAL INFO */
+  
+  body.personal-info input[type="submit"] {
+    position: static;
+    width: auto;
+    padding: 24px 24px;
+  }
+  
+  body.personal-info label {
+    width: 100%;
+  }
+  
+  body.personal-info input {
+    width: 100%;
+  }
+  
+  body.personal-info .row {
+    width: 100%;
+    align-items: center;
+    display: flex;
+  }
+  
+  /* Go from zero to full opacity */
+  @keyframes fadeEffect {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* footer */
+  .footer {
+    margin-top: 6%;
+  }
+  
+  .footer-container {
+    margin: 0 24px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .menu-row {
+    display: flex;
+    align-items: start;
+    gap: 5rem;
+  }
+  
+  .menu-row a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .footer-container .contact a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .footer-container .social {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .footer-container .social a {
+    color: #fff;
+  }
+  
+  .watermark {
+    margin-top: 2%;
+  }
+  
+  .watermark-container {
+    margin: 0 24px;
+  }
+  
+  .males {
+    color: #fff;
+    font-size: 14px;
+    margin-top: 24px;
+  }
+  
+  .line2 {
+    border-bottom: 1px solid #212124;
+  }
+  

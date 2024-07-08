@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Seberapa Seni Dirimu?</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+input[type="radio"] {
+    margin: 10px 0;
+}
+
+#result {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+</style>
+<body>
+    <h1>Arte - Situs Seni</h1>
+    <button id="openModalBtn">Mulai Kuis Seberapa Seni Dirimu?</button>
+
+    <!-- The Modal -->
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Kuis Seberapa Seni Dirimu?</h2>
+            <form id="quizForm">
+                <div class="question">
+                    <p>1. Apa yang paling Anda nikmati saat melihat sebuah lukisan?</p>
+                    <input type="radio" id="q1a" name="question1" value="A"> Warna-warnanya<br>
+                    <input type="radio" id="q1b" name="question1" value="B"> Bentuk dan komposisinya<br>
+                    <input type="radio" id="q1c" name="question1" value="C"> Emosi yang disampaikan<br>
+                    <input type="radio" id="q1d" name="question1" value="D"> Cerita atau makna di baliknya<br>
+                </div>
+                <div class="question">
+                    <p>2. Jenis lukisan apa yang paling menarik perhatian Anda saat mengunjungi galeri atau museum?</p>
+                    <input type="radio" id="q2a" name="question2" value="A"> Pemandangan alam<br>
+                    <input type="radio" id="q2b" name="question2" value="B"> Potret manusia<br>
+                    <input type="radio" id="q2c" name="question2" value="C"> Lukisan abstrak<br>
+                    <input type="radio" id="q2d" name="question2" value="D"> Adegan kehidupan sehari-hari<br>
+                </div>
+                <div class="question">
+                    <p>3. Seberapa sering Anda mengunjungi galeri seni atau museum?</p>
+                    <input type="radio" id="q3a" name="question3" value="A"> Sering, saya suka mengunjungi tempat-tempat tersebut<br>
+                    <input type="radio" id="q3b" name="question3" value="B"> Kadang-kadang, jika ada pameran menarik<br>
+                    <input type="radio" id="q3c" name="question3" value="C"> Jarang, hanya jika ada kesempatan khusus<br>
+                    <input type="radio" id="q3d" name="question3" value="D"> Hampir tidak pernah, saya tidak terlalu tertarik<br>
+                </div>
+                <div class="question">
+                    <p>4. Apa yang biasanya Anda lakukan jika melihat lukisan yang Anda suka di internet atau media sosial?</p>
+                    <input type="radio" id="q4a" name="question4" value="A"> Menyukai atau memberikan komentar<br>
+                    <input type="radio" id="q4b" name="question4" value="B"> Membagikannya dengan teman atau keluarga<br>
+                    <input type="radio" id="q4c" name="question4" value="C"> Mencari tahu lebih lanjut tentang pelukisnya<br>
+                    <input type="radio" id="q4d" name="question4" value="D"> Menyimpan gambarnya sebagai inspirasi<br>
+                </div>
+                <div class="question">
+                    <p>5. Jika Anda bisa memiliki satu lukisan terkenal di rumah Anda, lukisan seperti apa yang akan Anda pilih?</p>
+                    <input type="radio" id="q5a" name="question5" value="A"> Lukisan dengan warna-warna cerah dan energik<br>
+                    <input type="radio" id="q5b" name="question5" value="B"> Lukisan yang tenang dan menenangkan<br>
+                    <input type="radio" id="q5c" name="question5" value="C"> Lukisan yang menggugah pikiran dan imajinasi<br>
+                    <input type="radio" id="q5d" name="question5" value="D"> Lukisan yang realistis dan mendetail<br>
+                </div>
+                <button type="button" onclick="submitQuiz()">Kirim</button>
+            </form>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      
+    </script>
+</body>
+</html>

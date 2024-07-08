@@ -1,0 +1,1178 @@
+/*! locomotive-scroll v4.1.3 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+.has-scroll-smooth [data-scroll-container] {
+  min-height: 100vh;
+}
+
+[data-scroll-direction="horizontal"] [data-scroll-container] {
+  height: 100vh;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+[data-scroll-direction="horizontal"] [data-scroll-section] {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.c-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 11px;
+  height: 100%;
+  transform-origin: center right;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+.c-scrollbar:hover {
+  transform: scaleX(1.45);
+}
+.c-scrollbar:hover,
+.has-scroll-scrolling .c-scrollbar,
+.has-scroll-dragging .c-scrollbar {
+  opacity: 1;
+}
+[data-scroll-direction="horizontal"] .c-scrollbar {
+  width: 100%;
+  height: 10px;
+  top: auto;
+  bottom: 0;
+  transform: scaleY(1);
+}
+[data-scroll-direction="horizontal"] .c-scrollbar:hover {
+  transform: scaleY(1.3);
+}
+
+.c-scrollbar_thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
+  width: 7px;
+  border-radius: 10px;
+  margin: 2px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.has-scroll-dragging .c-scrollbar_thumb {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+[data-scroll-direction="horizontal"] .c-scrollbar_thumb {
+  right: auto;
+  bottom: 0;
+}
+
+@font-face {
+  font-family: font-light;
+  src: url("../Assets/fonts/MatterTRIAL-Light.otf");
+}
+
+@font-face {
+  font-family: font-regular;
+  src: url("../Assets/fonts/MatterTRIAL-Regular.otf");
+}
+
+@font-face {
+  font-family: font-medium;
+  src: url("../Assets/fonts/MatterTRIAL-Medium.otf");
+}
+@font-face {
+  font-family: font-semibold;
+  src: url("../Assets/fonts/MatterTRIAL-SemiBold.otf");
+}
+@font-face {
+  font-family: font-gallery;
+  src: url("../Assets/fonts/GalleryModern.otf");
+}
+
+::selection {
+  background-color: black;
+  color: white;
+}
+
+/* body styling */
+
+:root {
+  --background-primary-color: #000;
+  --background-secondary-color: #fff;
+  --background-third-color: #212124;
+  --text-primary: #ffffff;
+  --text-secondary: #818181;
+  --text-dark: #000;
+  --font-light: "font-light";
+  --font-regular: "font-regular";
+  --font-medium: "font-medium";
+  --font-semibold: "font-semibold";
+  --font-gallery: "font-gallery";
+  --light: 14px;
+  --regular: 16px;
+  --medium: 32px;
+  --xl: 42px;
+  --xxl: 68px;
+  --cross: 32px;
+  /* --opacity: 67%; */
+}
+
+body {
+  background-color: var(--background-primary-color);
+  font-family: "font-light";
+  margin: 0;
+}
+
+#navbar {
+  position: fixed; /* Make it stick/fixed */
+  top: 0; /* Stay on top */
+  width: 100%; /* Full width */
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  z-index: 2;
+}
+
+nav .logo img {
+  width: 68px;
+  margin-left: 12px;
+}
+
+.menu-container {
+  flex-grow: 1;
+}
+
+.menu-inside {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-right: 28px;
+}
+
+.sign button {
+  background: none;
+  padding: 8px;
+  color: var(--text-primary);
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-regular);
+}
+
+.open-menu button {
+  background: none;
+  padding: 8px;
+  color: var(--text-primary);
+  border: none;
+  cursor: pointer;
+}
+
+/* Sign In Modal Styling */
+.hidden {
+  display: none;
+}
+
+.signPop {
+  display: none;
+  position: fixed;
+  z-index: 8;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s;
+}
+
+.signPop .content {
+  background-color: #111111;
+  margin: auto;
+  display: flex;
+  width: 80%;
+  max-width: 80%;
+  border-radius: 16px;
+}
+
+.signPop .content .leftContent,
+.rightContent {
+  width: 100%;
+  padding: 36px 32px;
+}
+
+.content .leftContent {
+  background-color: #121212;
+  border-radius: 16px 0 0 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.leftContent .textGreet {
+  font-size: 18px;
+}
+
+.leftContent .description {
+  font-size: 28px;
+}
+
+.leftContent .description p {
+  font-size: 18px;
+}
+
+.leftContent .italic {
+  font-family: "font-gallery";
+}
+
+.question .question-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.question-inner a {
+  position: relative;
+  color: #fff;
+  font-size: 16px;
+  font-family: "font-regular";
+}
+
+.content .rightContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.rightContent .mark {
+  font-family: "font-semibold";
+  font-size: 24px;
+  color: #fff;
+}
+
+.rightContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.rightContent .checker {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.rightContent .checker label {
+  font-size: 16px;
+}
+
+.rightContent label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.rightContent input {
+  border: none;
+  border-bottom: 1px solid #2a2929;
+  background-color: transparent;
+  padding: 8px 6px;
+  transition: border-bottom-color 0.3s ease;
+  font-size: 16px;
+}
+
+.rightContent input:focus {
+  outline: none;
+  color: #fff;
+  border-bottom-color: #545151;
+}
+
+input.filled {
+  outline: none;
+  color: #fff;
+  border-bottom-color: #545151;
+}
+
+select {
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #2a2929; /* Gaya border yang sama dengan input lainnya */
+  background-color: transparent;
+  color: #fff; /* Tulisan putih */
+  padding: 8px 6px; /* Padding yang sama dengan input lainnya */
+  transition: border-bottom-color 0.3s ease;
+  cursor: pointer; /* Pointer cursor */
+}
+
+select:focus {
+  outline: none;
+  color: #fff;
+  border-bottom-color: #545151;
+}
+
+select.filled {
+  outline: none;
+  color: #fff;
+  border-bottom-color: #545151;
+}
+
+option {
+  font-size: 14px;
+  padding: 4px;
+  color: #fff;
+  background-color: #121212;
+}
+
+form input[type="submit"] {
+  background-color: #f9f9f9;
+  color: #000;
+  padding: 18px 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+form input[type="submit"]:hover {
+  background-color: #232323;
+  color: #fff;
+}
+
+.rightContent .reset {
+  align-self: flex-end;
+  margin: 16px 0;
+}
+
+.reset button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*  */
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: none; /* awalnya disembunyikan */
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  background-color: var(--background-secondary-color);
+  overflow: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  font-size: var(--cross);
+  top: 16px;
+  right: 25px;
+  padding: 8px 16px;
+  color: var(--text-dark);
+  border-radius: 100%;
+  border: none;
+  background-color: transparent;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.sidenav .closebtn:hover {
+  background-color: var(--background-primary-color);
+  border-radius: 100%;
+  color: var(--text-primary);
+}
+
+.menu-overlay {
+  display: flex;
+  margin-left: 42px;
+}
+
+.artType h6 {
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.artType li {
+  list-style: none;
+  margin-top: 16px;
+}
+
+.artType li a {
+  text-decoration: none;
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+.nav-overlay {
+  margin-left: 80px;
+}
+
+.nav-overlay h6 {
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.nav-overlay li {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.nav-overlay li a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-size: 52px;
+  position: relative;
+}
+
+.nav-overlay li a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--text-dark);
+  transition: width 0.5s ease;
+}
+
+.nav-overlay li a:hover::after {
+  width: 100%;
+}
+
+.info {
+  margin-left: 82px;
+  margin-top: 60px;
+}
+
+.info .text {
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.info button {
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #818181;
+  background-color: transparent;
+  padding: 8px 0;
+  transition: border-bottom-color 0.3s ease;
+  cursor: pointer;
+  font-family: "font-regular";
+  opacity: var(--opacity);
+}
+
+.info button:hover {
+  border-bottom-color: #000;
+}
+
+/*  */
+
+/* QUIZ SECTION */
+
+.quiz-wrap {
+  position: fixed;
+  bottom: 30px;
+  background-color: rgba(17, 17, 17, 0.8);
+  width: 200px;
+  border-radius: 8px;
+  z-index: 2;
+  padding: 18px 12px;
+  right: 24px;
+  border: 1px solid #454545;
+  backdrop-filter: blur(5px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brain-wrap {
+  background-color: #262626;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #818181;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quiz-wrap button {
+  background: none;
+  font-family: "font-regular";
+  font-size: 18px;
+  border: none;
+  color: #fff;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Quiz Modal */
+.quiz-modal {
+  display: none;
+  position: fixed;
+  border-radius: 12px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #111;
+  color: #fff;
+  padding: 20px;
+  border: 1px solid #545454;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 800px;
+  max-width: 90%; 
+  height: auto; 
+
+}
+
+
+.quiz-content {
+  display: none;
+  height: auto; /* Tinggi konten modal yang statis */
+  overflow: hidden; /* Atur overflow agar sesuai dengan konten */
+}
+
+.quiz-content.active {
+  display: block;
+}
+
+.button-group {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.button-group button{
+  width: 120px;
+  font-family:"font-light";
+  font-size: 16px;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.quiz-content p {
+  font-size: 20px; /* Ukuran teks pertanyaan */
+  margin-bottom: 24px; /* Jarak antara teks pertanyaan dan pilihan jawaban */
+}
+
+
+/* Styling untuk kontainer opsi */
+.quiz-content .option-container {
+  border: 2px solid #ccc; /* Border penuh */
+  border-radius: 10px; /* Border rounded */
+  overflow: hidden; /* Mengatasi overflow dari input dan label */
+  margin-bottom: 10px; /* Jarak antar opsi */
+}
+
+/* Styling untuk input radio/checkbox yang disembunyikan */
+.quiz-content input[type="radio"],
+.quiz-content input[type="checkbox"] {
+  display: none;
+}
+
+/* Styling untuk label yang berfungsi sebagai opsi */
+.quiz-content label {
+  display: block;
+  padding: 15px;
+  cursor: pointer;
+  border: 1px solid #454545;
+  border-radius: 10px; /* Border rounded */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Transisi yang halus */
+}
+
+/* Styling saat label difokuskan atau dipilih */
+.quiz-content input[type="radio"]:checked + label,
+.quiz-content input[type="checkbox"]:checked + label {
+  background-color: #2e2e2e; /* Warna background abu-abu */
+  color: #FFF; /* Warna teks saat dipilih */
+  border-color: #454545; /* Warna border saat dipilih */
+}
+
+/* Styling saat label hover */
+.quiz-content label:hover {
+  background-color: #454545; /* Warna background abu-abu saat di-hover */
+  border-color: #454545; /* Warna border saat di-hover */
+}
+
+.quiz-content .button-group button {
+  background-color: #2e2e2e; /* Warna latar belakang tombol */
+  color: #fff; /* Warna teks tombol */
+  border: none; /* Hapus border */
+  padding: 10px 20px; /* Padding untuk ruang di dalam tombol */
+  border-radius: 8px; /* Sudut bulat */
+  cursor: pointer; /* Ubah kursor menjadi tangan saat dihover */
+  transition: background-color 0.3s, color 0.3s; /* Transisi halus untuk perubahan warna */
+}
+
+.quiz-content .button-group button:hover {
+  background-color: #262626; /* Warna latar belakang tombol saat dihover */
+}
+
+.quiz-content .button-group button:active {
+  background-color: #262626; /* Warna latar belakang tombol saat ditekan */
+}
+
+
+
+
+
+/* hero section */
+
+.parent {
+  display: flex;
+  flex-direction: column;
+  height: 97vh; /* Tinggi penuh viewport */
+  position: relative;
+  z-index: 1; /* Pastikan ini ada di atas gambar */
+  text-align: center; /* Pusatkan teks secara horizontal */
+}
+
+.title-hero {
+  position: relative;
+  top: 48%;
+}
+
+.title-hero h1 {
+  color: var(--text-primary);
+  font-size: 72px;
+  margin: 0;
+}
+
+.image-wrap {
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: relative;
+  display: flex; /* Menggunakan flexbox untuk menempatkan item sebaris */
+  justify-content: space-between; /* Menempatkan item di sisi kiri dan kanan */
+  align-items: center; /* Menempatkan item di tengah secara vertikal */
+}
+
+.left-hand,
+.right-hand {
+  position: absolute;
+
+  width: 100%; /* Sesuaikan ukuran gambar */
+  height: 150%; /* Sesuaikan ukuran gambar */
+  background-size: cover; /* Menyesuaikan ukuran gambar agar sesuai dengan elemen */
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.left-hand {
+  background-image: url("../Assets/image/left hand.png"); /* Gambar untuk sisi kiri */
+}
+
+.right-hand {
+  background-image: url("../Assets/image/right hand.png"); /* Gambar untuk sisi kanan */
+}
+
+/* Word */
+.word-container {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.word {
+  width: 1000px;
+}
+
+.word p {
+  font-family: "font-light";
+  color: var(--text-primary);
+  text-align: center;
+  font-size: 72px;
+}
+
+.word .coloring {
+  color: #fff;
+  opacity: 75%;
+}
+
+/* most art */
+.most-art {
+  margin-top: 10%;
+}
+
+.title-section {
+  margin: 0 24px;
+}
+
+.title-section h2 {
+  color: var(--text-primary);
+  font-size: var(--medium);
+  font-weight: normal;
+}
+
+.line {
+  margin: 0 24px;
+  border-bottom: 1px solid #212124;
+}
+
+.artwork-container {
+  margin: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.art-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+}
+
+.img-wrap {
+  /* width: 225px; */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.img-wrap img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  transform: scale(1);
+}
+
+.img-wrap img:hover {
+  transform: scale(1.1);
+}
+
+.item .caption {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  user-select: none;
+  z-index: 1;
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-size: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* POPULAR ARTIST SECTION */
+.popular {
+  margin-top: 10%;
+}
+
+.content-divide {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 24px;
+}
+
+#default-image {
+  background-image: url("../Assets/image/stillLife.jpg");
+  width: 550px;
+  height: 350px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: opacity 0.3s ease-in-out;
+}
+#default-image.fade-out {
+  opacity: 0;
+}
+
+/* Container styles */
+.scrolling-text-container {
+  background-color: #111111;
+  overflow: hidden;
+  width: 700px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Inner container styles */
+.scrolling-text-inner {
+  display: flex;
+  color: #fff;
+  white-space: nowrap;
+  font-size: 18px;
+  padding: 8px 0;
+  overflow: hidden; /* Ensure inner container does not overflow */
+  width: 100%; /* Ensure inner container matches the width of the container */
+  box-sizing: border-box;
+}
+
+/* Text styles */
+.scrolling-text {
+  display: flex;
+}
+
+.scrolling-text-item {
+  padding: 0 30px;
+  overflow: hidden;
+  white-space: nowrap; /* Prevent text from wrapping */
+  flex-shrink: 0; /* Ensure items do not shrink */
+  user-select: none;
+}
+
+/* Apply the animation to the text items */
+.scrolling-text-inner > div {
+  animation: var(--direction) var(--marquee-speed) linear infinite;
+}
+
+.scrolling-text-container:hover .scrolling-text-inner > div {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.list .row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #212124;
+  margin-top: 1px;
+  width: 100%;
+}
+.list .row:hover {
+  background-color: #fff;
+  opacity: var(opacity);
+}
+
+.row a {
+  text-decoration: none;
+  font-size: 18px;
+  padding: 8px 0;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  transition: transform 0.9s ease, color 0.3s ease;
+  transform-origin: right;
+}
+
+.row a:hover {
+  transform: translateX(10px);
+  color: var(--text-dark);
+}
+
+.row a .name {
+  width: 240px;
+}
+
+.row a .artName {
+  width: 300px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row a .year {
+  width: 100px;
+}
+
+.row .artName,
+.row .year {
+  color: #7a7a7a;
+}
+
+/* EXHIBITION SECTION */
+.exhibition {
+  position: relative;
+  width: 100%;
+  height: 110vh; /* Tinggi penuh layar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 10%;
+}
+
+.exhibition-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.exhibition-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.exhibition-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.explainer-contain {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #000;
+  color: #fff; /* Tulisan berwarna putih */
+  padding: 20px;
+  max-width: 450px; /* Sesuaikan ukuran maksimal sesuai kebutuhan */
+}
+
+.title-exhibition {
+  font-size: 32px;
+  font-family: "font-light";
+  margin-bottom: 14px;
+}
+
+.explainer-contain p {
+  font-size: 15px;
+  color: #fff;
+  opacity: var(--opacity);
+  margin: 10px 0 10px 0;
+}
+
+.explainer-contain button {
+  position: relative;
+  background-color: transparent; /* Warna latar belakang tombol */
+  color: #fff;
+  border: none;
+  font-size: 12px;
+  font-family: "font-medium";
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.explainer-contain button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: #818181;
+  transition: width 0.3s ease;
+}
+
+.explainer-contain button:hover::after {
+  width: 100%;
+}
+
+/* NEWS SECTION */
+.news {
+  margin-top: 10%;
+}
+
+.article-container {
+  width: 100%;
+  margin: 42px 24px;
+  display: flex;
+  gap: 1.1rem;
+}
+
+.article {
+  width: 23%;
+  height: 50%;
+  text-decoration: none;
+  color: #fff;
+}
+
+.articleImage {
+  width: 100%;
+  height: 180px;
+}
+
+.articleImage img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.article .title {
+  height: 40px;
+}
+
+.article .title p {
+  color: var(--text-primary);
+  text-overflow: ellipsis;
+  white-space: initial;
+}
+
+.article .tag {
+  margin-top: 24px;
+}
+
+.article .tag p {
+  color: #fff;
+  user-select: none;
+  z-index: 1;
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: #111111;
+  display: inline-block;
+}
+
+/* text-long */
+.text-long {
+  background-color: #111;
+  color: #fff;
+  padding: 2px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* footer */
+.footer {
+  margin-top: 6%;
+}
+
+.footer-container {
+  margin: 0 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-row {
+  display: flex;
+  align-items: start;
+  gap: 5rem;
+}
+
+.menu-row a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer-container .contact a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer-container .social {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.footer-container .social a {
+  color: #fff;
+}
+
+.watermark {
+  margin-top: 2%;
+}
+
+.watermark-container {
+  margin: 0 24px;
+}
+
+.males {
+  color: #fff;
+  font-size: 14px;
+  margin-top: 24px;
+}
+
+.line2 {
+  border-bottom: 1px solid #212124;
+}
+
+/*  */
