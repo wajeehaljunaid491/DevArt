@@ -161,6 +161,7 @@ nav .logo img {
 
 .menu-inside {
   display: flex;
+  align-items: center;
   gap: 1rem;
   justify-content: flex-end;
   margin-right: 28px;
